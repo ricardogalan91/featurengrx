@@ -6,7 +6,7 @@ export const loadFeatureBookss = createAction(
 
 export const loadFeatureBookssSuccess = createAction(
   '[FeatureBooks] Load FeatureBookss Success',
-  props<{ data: any }>()
+  props<{ data:any }>()
 );
 
 export const loadFeatureBookssFailure = createAction(
