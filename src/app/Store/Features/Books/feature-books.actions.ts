@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { Book } from 'src/app/shared/book';
 
 export const loadFeatureBookss = createAction(
   '[FeatureBooks] Load FeatureBookss'
@@ -6,7 +7,7 @@ export const loadFeatureBookss = createAction(
 
 export const loadFeatureBookssSuccess = createAction(
   '[FeatureBooks] Load FeatureBookss Success',
-  props<{ data:any }>()
+  props<{ books:Book[] }>()
 );
 
 export const loadFeatureBookssFailure = createAction(
