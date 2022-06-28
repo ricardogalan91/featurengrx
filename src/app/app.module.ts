@@ -9,19 +9,23 @@ import { LoginModule } from './login/login.module';
 import { BooksListModule } from './books-list/books-list.module';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductsListModule } from './products-list/products-list.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './shared/materials.module';
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    MaterialModule,
     BrowserModule,
     LoginModule,
     BooksListModule,
     ProductsListModule,
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

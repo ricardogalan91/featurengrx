@@ -9,6 +9,17 @@ import { ProductsListServiceService } from 'src/app/products-list/products-list-
 @Injectable()
 export class ProductFeatureEffects {
 
+  loadProductFeatures$=createEffect(()=>{
+    return this.actions$.pipe(
+      ofType(ProductFeatureActions.loadProductFeatures),
+      mergeMap(()=>this.productsService.getProductsList()
+      .pipe(
+        map(products=>ProductFeatureActions.loadProductFeaturesSuccess({products})),
+        catchError(()=>EMPTY)
+      ))
+    )
+  }
+  )
 
-  constructor(private actions$: Actions) {}
+  constructor(private actions$: Actions, private productsService:ProductsListServiceService) {}
 }
