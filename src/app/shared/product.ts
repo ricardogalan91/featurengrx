@@ -4,5 +4,5 @@ export interface Product{
     age:number;
     price:number;
     product:string;
-    id:number;
+    id:string;
 }
