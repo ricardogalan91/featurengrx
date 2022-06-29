@@ -20,3 +20,8 @@ export const selectProductsSuccess=createSelector(
   selectLoading,
   (products, loading)=>({products,loading})
 )
+
+export const selectElementByIdSuccess=createSelector(
+  selectProductFeatureState,
+  (state)=>state.productDetailed
+)

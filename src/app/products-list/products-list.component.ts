@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Product } from '../shared/product';
-import { selectProductsSuccess } from '../Store/Features/Products/product-feature.selectors';
+import { deleteProductFeatures, loadElementByIdFeatures, postProductFeatures } from '../Store/Features/Products/product-feature.actions';
+import { selectElementByIdSuccess, selectProductsSuccess } from '../Store/Features/Products/product-feature.selectors';
 import { ProductsListServiceService } from './products-list-service.service';
 
 @Component({
@@ -14,11 +15,21 @@ export class ProductsListComponent implements OnInit {
   productos:any=[];
   subscriptions:Subscription;
   displayedColumns=['producto', 'precio', 'vendedor', 'delete', 'details'];
-  constructor(private productsService:ProductsListServiceService) { }
+  constructor(private productsService:ProductsListServiceService, private store:Store<any>) { }
 
   ngOnInit(): void {
-    this.subscriptions=new Subscription();
-    this.getProducts();
+    this.store.select(selectProductsSuccess).subscribe(
+      val=>{
+        if(val.products.length>0){
+          this.productos=val.products
+        }
+      }
+    )
+    this.store.select(selectElementByIdSuccess).subscribe(
+      val=>{
+        console.log(val)
+      }
+    )
   }
 
   getProducts(){
@@ -32,21 +43,26 @@ export class ProductsListComponent implements OnInit {
   }
 
   onDeleteElement(el:any){
-    this.productsService.deleteProduct(el.id).subscribe(
-      (val)=>{
-        this.getProducts();
-      }
-    )
+    this.store.dispatch(deleteProductFeatures({id:el.id}))
   }
 
   onClickRow(el:any){}
 
   onAddElement(){
+    let product={
+      fname:'Ricardo',
+      lname:'Galan',
+      age:30,
+      price:100,
+      product:'Coffee',
+      id:'100'
+    }
 
+    this.store.dispatch(postProductFeatures({product:product}))
   }
 
   onGetProductDetails(el:any){
-
+    this.store.dispatch(loadElementByIdFeatures({id:el.id}))
   }
 
   ngOnDestroy(): void {

@@ -21,5 +21,44 @@ export class ProductFeatureEffects {
   }
   )
 
+  postProductFeatures$=createEffect(()=>{
+    return this.actions$.pipe(
+      ofType(ProductFeatureActions.postProductFeatures),
+      mergeMap((product)=>this.productsService.postProduct(product.product)
+      .pipe(
+        map(()=>ProductFeatureActions.loadProductFeatures()),
+        catchError(()=>EMPTY)
+      )
+      )
+    )
+  }
+  )
+
+  deleteProductFeatures$=createEffect(()=>{
+    return this.actions$.pipe(
+      ofType(ProductFeatureActions.deleteProductFeatures),
+      mergeMap((product)=>this.productsService.deleteProduct(product.id)
+      .pipe(
+        map(()=>ProductFeatureActions.loadProductFeatures()),
+        catchError(()=>EMPTY)
+      )
+      )
+    )
+  }
+  )
+
+  loadProductDetailedFeatures$=createEffect(()=>{
+    return this.actions$.pipe(
+      ofType(ProductFeatureActions.loadElementByIdFeatures),
+      mergeMap((product)=>this.productsService.getProductDetail(product.id)
+      .pipe(
+        map((productDetailed)=>ProductFeatureActions.loadElementByIdFeaturesSucces({productDetailed})),
+        catchError(()=>EMPTY)
+      )
+      )
+    )
+  }
+  )
+
   constructor(private actions$: Actions, private productsService:ProductsListServiceService) {}
 }

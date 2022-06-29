@@ -6,12 +6,14 @@ export const productFeatureFeatureKey = 'productFeature';
 
 export interface State {
   products: Product[];
-  loading:boolean
+  loading:boolean,
+  productDetailed:any
 }
 
 export const initialState: State = {
   products:[],
-  loading:true
+  loading:true,
+  productDetailed:{}
 };
 
 export const reducer = createReducer(
@@ -24,5 +26,9 @@ export const reducer = createReducer(
     return {...state, products, loading:false}
   }),
   on(ProductFeatureActions.loadProductFeaturesFailure, (state, action) => state),
+
+  on(ProductFeatureActions.loadElementByIdFeaturesSucces, (state,{productDetailed})=>{
+    return {...state,productDetailed}
+  })
 
 );
